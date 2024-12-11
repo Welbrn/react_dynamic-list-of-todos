@@ -24,16 +24,19 @@ export const App: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const getFilteredTodos = todos.filter(todo => {
-    const matchesStatus =
-      filterStatus === 'all' ||
-      (filterStatus === 'active' && !todo.completed) ||
-      (filterStatus === 'completed' && todo.completed);
+  const getFilteredTodos = () =>
+    todos.filter(todo => {
+      const matchesStatus =
+        filterStatus === 'all' ||
+        (filterStatus === 'active' && !todo.completed) ||
+        (filterStatus === 'completed' && todo.completed);
 
-    const matchesQuery = todo.title.toLowerCase().includes(query.toLowerCase());
+      const matchesQuery = todo.title
+        .toLowerCase()
+        .includes(query.toLowerCase());
 
-    return matchesStatus && matchesQuery;
-  });
+      return matchesStatus && matchesQuery;
+    });
 
   return (
     <>
@@ -54,7 +57,7 @@ export const App: React.FC = () => {
             <div className="block">
               {!isLoading && todos.length > 0 ? (
                 <TodoList
-                  todos={getFilteredTodos}
+                  todos={getFilteredTodos()}
                   selectedTodo={isSelectedTodo}
                   setSelectedTodo={setIsSelectedTodo}
                 />
